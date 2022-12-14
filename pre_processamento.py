@@ -1,18 +1,17 @@
 import pandas as pd
 import re
-import xarray as xr
 import os
 import numpy as np
 
 def corrige_txt(nom_estacao, ano, mes):
     for num1 in ano:
         for num2 in mes:
-            file = "C:/Users/pedro/OneDrive/Documentos/GitHub/Processamento_pluviometrico/Dados/DadosPluviometricos/" + nom_estacao + "_" + num1 + num2 + "_Plv.txt"
+            file = "D:/Documentos/GitHub/estacoes_pluviometricas/Dados/DadosPluviometricos/" + nom_estacao + "_" + num1 + num2 + "_Plv.txt"
             if os.path.exists(file):
                 fin = open(file, "rt")
-                if not os.path.exists("C:/Users/pedro/OneDrive/Documentos/GitHub/Processamento_pluviometrico/Dados/DadosPluviometricos/aux_"+ nom_estacao):
-                    os.mkdir("C:/Users/pedro/OneDrive/Documentos/GitHub/Processamento_pluviometrico/Dados/DadosPluviometricos/aux_"+ nom_estacao)
-                fout = open("C:/Users/pedro/OneDrive/Documentos/GitHub/Processamento_pluviometrico/Dados/DadosPluviometricos/aux_" + nom_estacao + "/" + nom_estacao + "_" + num1 + num2 + "_Met2.txt", "wt")
+                if not os.path.exists("D:/Documentos/GitHub/estacoes_pluviometricas/Dados/DadosPluviometricos/aux_"+ nom_estacao):
+                    os.mkdir("D:/Documentos/GitHub/estacoes_pluviometricas/Dados/DadosPluviometricos/aux_"+ nom_estacao)
+                fout = open("D:/Documentos/GitHub/estacoes_pluviometricas/Dados/DadosPluviometricos/aux_" + nom_estacao + "/" + nom_estacao + "_" + num1 + num2 + "_Met2.txt", "wt")
                 count = 0
                 for line in fin:
                     count += 1
@@ -35,7 +34,7 @@ def gera_dataset(nom_estacao, ano, mes):
     for num1 in ano:
         check = 0
         for num2 in mes:
-            texto = 'C:/Users/pedro/OneDrive/Documentos/GitHub/Processamento_pluviometrico/Dados/DadosPluviometricos/aux_' + nom_estacao + '/' + nom_estacao + '_' + num1 + num2 + '_Met2.txt'
+            texto = 'D:/Documentos/GitHub/estacoes_pluviometricas/Dados/DadosPluviometricos/aux_' + nom_estacao + '/' + nom_estacao + '_' + num1 + num2 + '_Met2.txt'
             if os.path.exists(texto):
                 data1 = pd.read_csv(texto, sep=' ', skiprows=[0, 1, 2, 3, 4], header=None)
                 if len(data1.columns) == 9:
@@ -65,7 +64,7 @@ def gera_dataset(nom_estacao, ano, mes):
 
     for num1 in ano1:
         for num2 in mes1:
-            texto = 'C:/Users/pedro/OneDrive/Documentos/GitHub/Processamento_pluviometrico/Dados/DadosPluviometricos/aux_' + nom_estacao + '/' + nom_estacao + '_' + num1 + num2 + '_Met2.txt'
+            texto = 'D:/Documentos/GitHub/estacoes_pluviometricas/Dados/DadosPluviometricos/aux_' + nom_estacao + '/' + nom_estacao + '_' + num1 + num2 + '_Met2.txt'
             if os.path.exists(texto):
                 data2 = pd.read_csv(texto, sep=' ', skiprows=[0, 1, 2, 3, 4], header=None, on_bad_lines='skip')
                 if len(data2.columns) == 9:
@@ -111,4 +110,8 @@ def pre_processamento(nom_estacao):
     #data.plot.line('Dia', ['Umidade'], title='Umidade')
     del data
 
-pre_processamento('saude')
+estacoes = ['alto_da_boa_vista','anchieta','av_brasil_mendanha','bangu','campo_grande','cidade_de_deus','copacabana','grajau','grajau_jacarepagua','grande_meier','grota_funda','guaratiba','ilha_do_governador','iraja','jardim_botanico','laranjeiras','madureira','penha','piedade','recreio','riocentro','rocinha','santa_cruz','santa_teresa','sao_cristovao','saude','sepetiba','tanque','tijuca','tijuca_muda','urca','vidigal']
+
+for i in estacoes:
+    print(i)
+    pre_processamento(i)
