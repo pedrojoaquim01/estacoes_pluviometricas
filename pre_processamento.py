@@ -6,12 +6,12 @@ import numpy as np
 def corrige_txt(nom_estacao, ano, mes):
     for num1 in ano:
         for num2 in mes:
-            file = "D:/Documentos/GitHub/estacoes_pluviometricas/Dados/DadosPluviometricos/" + nom_estacao + "_" + num1 + num2 + "_Plv.txt"
+            file = "./Dados/DadosPluviometricos/" + nom_estacao + "_" + num1 + num2 + "_Plv.txt"
             if os.path.exists(file):
                 fin = open(file, "rt")
-                if not os.path.exists("D:/Documentos/GitHub/estacoes_pluviometricas/Dados/DadosPluviometricos/aux_"+ nom_estacao):
-                    os.mkdir("D:/Documentos/GitHub/estacoes_pluviometricas/Dados/DadosPluviometricos/aux_"+ nom_estacao)
-                fout = open("D:/Documentos/GitHub/estacoes_pluviometricas/Dados/DadosPluviometricos/aux_" + nom_estacao + "/" + nom_estacao + "_" + num1 + num2 + "_Met2.txt", "wt")
+                if not os.path.exists("C:/Users/pedro/OneDrive/Documentos/GitHub/estacoes_pluviometricas/Dados/DadosPluviometricos/aux_"+ nom_estacao):
+                    os.mkdir("./Dados/DadosPluviometricos/aux_"+ nom_estacao)
+                fout = open("./Dados/DadosPluviometricos/aux_" + nom_estacao + "/" + nom_estacao + "_" + num1 + num2 + "_Met2.txt", "wt")
                 count = 0
                 for line in fin:
                     count += 1
@@ -34,7 +34,7 @@ def gera_dataset(nom_estacao, ano, mes):
     for num1 in ano:
         check = 0
         for num2 in mes:
-            texto = 'D:/Documentos/GitHub/estacoes_pluviometricas/Dados/DadosPluviometricos/aux_' + nom_estacao + '/' + nom_estacao + '_' + num1 + num2 + '_Met2.txt'
+            texto = './Dados/DadosPluviometricos/aux_' + nom_estacao + '/' + nom_estacao + '_' + num1 + num2 + '_Met2.txt'
             if os.path.exists(texto):
                 data1 = pd.read_csv(texto, sep=' ', skiprows=[0, 1, 2, 3, 4], header=None)
                 if len(data1.columns) == 9:
@@ -64,7 +64,7 @@ def gera_dataset(nom_estacao, ano, mes):
 
     for num1 in ano1:
         for num2 in mes1:
-            texto = 'D:/Documentos/GitHub/estacoes_pluviometricas/Dados/DadosPluviometricos/aux_' + nom_estacao + '/' + nom_estacao + '_' + num1 + num2 + '_Met2.txt'
+            texto = './Dados/DadosPluviometricos/aux_' + nom_estacao + '/' + nom_estacao + '_' + num1 + num2 + '_Met2.txt'
             if os.path.exists(texto):
                 data2 = pd.read_csv(texto, sep=' ', skiprows=[0, 1, 2, 3, 4], header=None, on_bad_lines='skip')
                 if len(data2.columns) == 9:
@@ -115,3 +115,4 @@ estacoes = ['alto_da_boa_vista','anchieta','av_brasil_mendanha','bangu','campo_g
 for i in estacoes:
     print(i)
     pre_processamento(i)
+
